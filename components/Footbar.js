@@ -9,114 +9,110 @@ const Footbar = () => {
       <div className="text-md flex w-full flex-col space-y-5 px-4 pt-8 md:flex-row md:justify-center md:space-x-4 md:space-y-0 md:pt-0 lg:space-x-16">
         <div>
           <div className="mb-[13px] font-semibold text-slate-100">
-            <span className="font-en svelte-t3mcl">LIVE EVENTS</span>
+            <span className="font-en ">LIVE EVENTS</span>
           </div>{" "}
           <div className="flex flex-col">
             <a
               href="/en/online-courses/gita"
               className="mb-2.5 text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">Bhagavad Gita</span>
+              <span className="font-en ">Bhagavad Gita</span>
             </a>{" "}
             <a
               href="/en/sant-sarita"
               className="mb-2.5 text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">Sant Sarita</span>
+              <span className="font-en ">Sant Sarita</span>
             </a>{" "}
             <a
               href="/en/ashtavakra-samhita"
               className="mb-2.5 text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">Ashtavakra Samhita</span>
+              <span className="font-en ">Ashtavakra Samhita</span>
             </a>{" "}
             <a
               href="/en/bodh-pratyusha"
               className="mb-2.5 text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">Bodh Pratyusha</span>
+              <span className="font-en ">Bodh Pratyusha</span>
             </a>
           </div>
         </div>{" "}
         <div>
           <div className="mb-[13px] whitespace-nowrap font-semibold text-slate-100">
-            <span className="font-en svelte-t3mcl">WISDOM CONTENT</span>
+            <span className="font-en ">WISDOM CONTENT</span>
           </div>{" "}
           <div className="flex flex-col">
             <a
               href="/en/courses"
               className="mb-2.5 text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">Video Series</span>
+              <span className="font-en ">Video Series</span>
             </a>{" "}
             <a
               href="/en/books"
               className="mb-2.5 text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">AP Books</span>
+              <span className="font-en ">AP Books</span>
             </a>{" "}
             <a
               href="/en/articles"
               className="mb-2.5 text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">AP Articles</span>
+              <span className="font-en ">AP Articles</span>
             </a>{" "}
             <a
               href="/en/circle"
               className="text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">AP Circle</span>
+              <span className="font-en ">AP Circle</span>
             </a>
           </div>
         </div>{" "}
         <div>
           <div className="mb-[13px] font-semibold text-slate-100">
-            <span className="font-en svelte-t3mcl">MORE</span>
+            <span className="font-en ">MORE</span>
           </div>{" "}
           <div className="flex flex-col">
             <a
               href="/en/about"
               className="mb-2.5 text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">
-                About Acharya Prashant
-              </span>
+              <span className="font-en ">About Acharya Prashant</span>
             </a>{" "}
             <a
               href="/en/invite?tIn=0"
               className="mb-2.5 text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">Invite Him</span>
+              <span className="font-en ">Invite Him</span>
             </a>{" "}
             <a
               href="/en/invite?tIn=1"
               className="mb-2.5 text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">Interview Him</span>
+              <span className="font-en ">Interview Him</span>
             </a>{" "}
             <a
               href="/en/vedant"
               className="mb-2.5 text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">Ghar Ghar Upanishad</span>
+              <span className="font-en ">Ghar Ghar Upanishad</span>
             </a>{" "}
             <a
               href="/en/media"
               className="text-slate-300 hover:cursor-pointer hover:text-[#D24115]"
             >
-              <span className="font-en svelte-t3mcl">
-                Media and Public Interaction
-              </span>
+              <span className="font-en ">Media and Public Interaction</span>
             </a>
           </div>
         </div>{" "}
         <div>
           <div className="mb-[13px] font-semibold text-slate-100">
-            <span className="font-en svelte-t3mcl">SOCIAL MEDIA</span>
+            <span className="font-en ">SOCIAL MEDIA</span>
           </div>{" "}
           <div className="mb-6 flex flex-col ">
             <div className="mb-2.5 text-slate-300">
-              <span className="font-en svelte-t3mcl">For English</span>
+              <span className="font-en ">For English</span>
             </div>{" "}
             <div className="flex space-x-2">
               <div className="text-slate-300 hover:text-[#D24115]">
@@ -206,7 +202,7 @@ const Footbar = () => {
           </div>{" "}
           <div className="flex flex-col">
             <div className="mb-2.5 text-slate-300">
-              <span className="font-en svelte-t3mcl">For Hindi</span>
+              <span className="font-en ">For Hindi</span>
             </div>{" "}
             <div className="flex space-x-2">
               <div className="text-slate-300 hover:text-[#D24115]">
@@ -297,21 +293,19 @@ const Footbar = () => {
         </div>{" "}
         <div>
           <div className="mb-[13px] pt-2 font-semibold text-slate-100 md:hidden">
-            <span className="font-en svelte-t3mcl">
-              DOWNLOAD ACHARYA PRASHANT APP
-            </span>
+            <span className="font-en ">DOWNLOAD ACHARYA PRASHANT APP</span>
           </div>{" "}
           <div className="mb-[13px] hidden font-semibold text-slate-100 md:block">
-            <span className="font-en svelte-t3mcl">DOWNLOAD APP</span>
+            <span className="font-en ">DOWNLOAD APP</span>
           </div>{" "}
           <div className="mb-5 hidden items-center md:flex">
             <img
               className="mr-2 h-6 w-6"
-              src="/images/ic_favicon.png"
+              src="https://acharyaprashant.org/images/ic_favicon.png"
               alt="Acharya Prashant"
             />{" "}
             <div className="text-slate-100">
-              <span className="font-en svelte-t3mcl">Acharya Prashant</span>
+              <span className="font-en ">Acharya Prashant</span>
             </div>
           </div>{" "}
           <div className="flex md:flex-col">
@@ -343,7 +337,7 @@ const Footbar = () => {
         </div>{" "}
         <div className="space-y-3 pt-2 md:pt-0">
           <div className="mb-[13px] font-semibold text-slate-100 md:pb-0">
-            <span className="font-en svelte-t3mcl">CONTACT US</span>
+            <span className="font-en ">CONTACT US</span>
           </div>{" "}
           <div className="mb-2.5 flex items-center">
             <div className="pr-2 text-slate-300">
@@ -369,9 +363,7 @@ const Footbar = () => {
             </div>{" "}
             <a href="mailto:support@advait.org.in">
               <div className="text-slate-300 hover:text-[#D24115]">
-                <span className="font-en svelte-t3mcl">
-                  support@advait.org.in
-                </span>
+                <span className="font-en ">support@advait.org.in</span>
               </div>
             </a>
           </div>{" "}
@@ -399,7 +391,7 @@ const Footbar = () => {
             </div>{" "}
             <a href="https://wa.me/+919643750710" target="_blank">
               <div className="text-slate-300 hover:text-[#D24115]">
-                <span className="font-en svelte-t3mcl">+91 9650585100</span>
+                <span className="font-en ">+91 9650585100</span>
               </div>
             </a>
           </div>{" "}
@@ -420,7 +412,7 @@ const Footbar = () => {
             </div>{" "}
             <a href="tel:+919650585100" className="flex">
               <div className="text-slate-300 hover:text-[#D24115]">
-                <span className="font-en svelte-t3mcl">+91 9650585100</span>
+                <span className="font-en ">+91 9650585100</span>
               </div>
             </a>
           </div>
@@ -429,7 +421,7 @@ const Footbar = () => {
       <div className="mx-auto mb-6 mt-6 h-[0.5px] w-full bg-slate-400 md:mt-[62px] md:w-2/3"></div>{" "}
       <div className="flex-col text-xs md:mx-auto md:flex md:flex-row md:justify-center md:text-sm">
         <div className="text-slate-300 md:pr-20">
-          <span className="font-en svelte-t3mcl">
+          <span className="font-en ">
             Copyright © 2022 PrashantAdvait Foundation
           </span>
         </div>{" "}
@@ -438,14 +430,14 @@ const Footbar = () => {
             href="/en/terms-and-conditions"
             className="cursor-pointer text-slate-300 hover:text-[#D24115]"
           >
-            <span className="font-en svelte-t3mcl">Terms &amp; Conditions</span>
+            <span className="font-en ">Terms &amp; Conditions</span>
           </a>{" "}
           <div className="text-slate-300">|</div>{" "}
           <a
             href="/en/privacy-policy"
             className="cursor-pointer text-slate-300 hover:text-[#D24115]"
           >
-            <span className="font-en svelte-t3mcl">Privacy Policy</span>
+            <span className="font-en ">Privacy Policy</span>
           </a>
         </div>
       </div>{" "}

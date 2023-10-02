@@ -36,10 +36,7 @@ const NavbarDropdown = ({ content, Inside }) => {
         </div>
 
         {drop && (
-          <div
-            // tabIndex={0}
-            className="absolute top-[40px] flex flex-col overflow-hidden whitespace-nowrap rounded-lg bg-white bg-opacity-100 px-1.5 py-2 text-slate-800 shadow-lg lg:-left-5 xl:-left-6"
-          >
+          <div className="absolute top-[40px] flex flex-col overflow-hidden whitespace-nowrap rounded-lg bg-white bg-opacity-100 px-1.5 py-2 text-slate-800 shadow-lg lg:-left-5 xl:-left-6 z-20">
             {content.item.map((item) => {
               return (
                 <div
