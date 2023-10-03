@@ -540,8 +540,8 @@ const MainBody = ({ data }) => {
                                   {" "}
                                 </div>{" "}
                                 <img
-                                  className="absolute object-contain logo-height-base right-1 bottom-1 "
-                                  src="/images/ic_apsignature_english.png"
+                                  className="absolute object-contain h-[31px] md:h-[26px] right-1 bottom-1 "
+                                  src="https://acharyaprashant.org/images/ic_apsignature_english.png"
                                   alt="AP Name Logo"
                                 />
                               </div>
@@ -565,8 +565,8 @@ const MainBody = ({ data }) => {
                                   {" "}
                                 </div>{" "}
                                 <img
-                                  className="absolute object-contain logo-height-base right-1 bottom-1 "
-                                  src="/images/ic_apsignature_english.png"
+                                  className="absolute object-contain  h-[31px] md:h-[26px] right-1 bottom-1 "
+                                  src="https://acharyaprashant.org/images/ic_apsignature_english.png"
                                   alt="AP Name Logo"
                                 />
                               </div>
@@ -590,8 +590,8 @@ const MainBody = ({ data }) => {
                                   {" "}
                                 </div>{" "}
                                 <img
-                                  className="absolute object-contain logo-height-base right-1 bottom-1 "
-                                  src="/images/ic_apsignature_english.png"
+                                  className="absolute object-contain  h-[31px] md:h-[26px] right-1 bottom-1 "
+                                  src="https://acharyaprashant.org/images/ic_apsignature_english.png"
                                   alt="AP Name Logo"
                                 />
                               </div>
@@ -633,8 +633,8 @@ const MainBody = ({ data }) => {
                         {" "}
                       </div>{" "}
                       <img
-                        className="absolute object-contain logo-height-base right-1 bottom-1 "
-                        src="/images/ic_apsignature_english.png"
+                        className="absolute object-contain  h-[31px] md:h-[26px] right-1 bottom-1 "
+                        src="https://acharyaprashant.org/images/ic_apsignature_english.png"
                         alt="AP Name Logo"
                       />
                     </div>
