@@ -1,6 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 
-const MainBody = () => {
+function convertHoursAndMinutes(time) {
+  const hours = Math.floor(time);
+  const minutes = Math.floor((time % 1) * 60);
+  return `${hours} hours ${minutes} minutes`;
+}
+
+export const FaqComponent = ({ faq }) => {
+  const [drop, setdrop] = useState(false);
+  return (
+    <div>
+      <div className="my-4 h-[0.5px] justify-start  bg-[rgb(202,213,225)]   " />
+      <div className="">
+        <div
+          onClick={() => setdrop(!drop)}
+          className="flex items-center justify-between md:cursor-pointer "
+        >
+          <div className="pr-2 font-semibold text-[rgb(71,85,105)]  ">
+            <span className="font-hi   ">{faq.question}</span>
+          </div>{" "}
+          <div className="h-3 w-3 text-slate-400 hover:text-slate-800  ">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={11}
+              height={7}
+              viewBox="0 0 11 7"
+              className="fill-current  "
+            >
+              <path
+                fillRule="evenodd"
+                d="M.793.793a1 1 0 0 1 1.414 0L5.5 4.086 8.793.793a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z"
+                className=" "
+              />
+            </svg>
+          </div>
+        </div>{" "}
+        {drop && (
+          <div id="markdown" class="w-full">
+            <div class="tab:text-md pt-1 pr-4 leading-normal text-[rgb(71,85,105)] tab:pr-8">
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: faq.answer,
+                }}
+                class="font-hi "
+              ></span>
+            </div>
+          </div>
+        )}
+      </div>{" "}
+    </div>
+  );
+};
+const MainBody = ({ data }) => {
+  const [drop, setdrop] = useState(false);
   return (
     <>
       {/* Hello world */}
@@ -27,7 +79,7 @@ const MainBody = () => {
                         <div className="relative flex w-full flex-row ">
                           <button className="flex flex-row items-center whitespace-nowrap rounded-l border-r pl-2 text-xs font-normal ">
                             <div className="text-xs font-medium text-[rgb(71,85,105)]  ">
-                              <span className="font-en   ">All</span>
+                              <span className="font-en ">All</span>
                             </div>{" "}
                             <div className="px-3 text-slate-500  ">
                               <svg
@@ -46,7 +98,7 @@ const MainBody = () => {
                           </button>{" "}
                           <input
                             type="search"
-                            className="h-9 w-full border-0 text-[rgb(30,41,59)] caret-[#ea580c] focus:ring-0 "
+                            className="h-9 w-full border-0 text-[rgb(30,41,59)] caret-[#ea580c] focus:outline-none "
                             placeholder=" Search for video series"
                           />{" "}
                           <button
@@ -122,7 +174,7 @@ const MainBody = () => {
                   </svg>{" "}
                 </div>
                 <div className="mr-1 text-sm font-medium  ">
-                  <span className="font-hi   ">संतवाणी</span>
+                  <span className="font-hi   ">{data?.details.title}</span>
                 </div>{" "}
                 <div className="mr-1 px-1 text-[rgb(71,85,105)] hidden  ">
                   <svg
@@ -147,7 +199,7 @@ const MainBody = () => {
                 className="text-lg font-semibold text-[rgb(30,41,59)] md:text-xl lg:py-0 lg:text-2xl py-1.5  "
                 id="main-website-header-text"
               >
-                <span className="font-hi   ">संतवाणी</span>
+                <span className="font-hi   ">{data?.details.title}</span>
               </div>
             </div>{" "}
             <div className="px-4 lg:px-8 ">
@@ -157,7 +209,16 @@ const MainBody = () => {
                     <div className="relative h-full w-full overflow-hidden rounded ">
                       <img
                         className="h-full w-full object-cover "
-                        src="https://cimg.acharyaprashant.org/images/img-4337ee73-d8a3-4c8b-951b-d09a5a6468d3/10/image.jpg"
+                        src={
+                          data?.details.thumbnail.domain +
+                          "/" +
+                          data?.details.thumbnail.basePath +
+                          "/" +
+                          data?.details.thumbnail.qualities[0] +
+                          "/" +
+                          data?.details.thumbnail.key
+                        }
+                        // src="https://cimg.acharyaprashant.org/images/img-4337ee73-d8a3-4c8b-951b-d09a5a6468d3/10/image.jpg"
                         alt="Thumbnail"
                       />{" "}
                       <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
@@ -321,21 +382,12 @@ const MainBody = () => {
                 </div>{" "}
                 <div className="flex flex-col self-stretch pt-4 text-sm md:pl-4 md:pt-0 lg:text-lg ">
                   <div className="text-lg font-medium text-[rgb(30,41,59)] lg:text-xl  ">
-                    <span className="font-hi">
-                      संतों की सीख पर आधारित श्रृंखला
-                    </span>
+                    <span className="font-hi">{data?.details.subtitle}</span>
                   </div>{" "}
                   <div className="text-justify text-base text-[rgb(71,85,105)] md:pr-4  ">
                     <div className="hidden md:block  ">
                       <span className="font-hi   ">
-                        जब-जब समाज में धर्म के प्रति अनादर बढ़ा है और आम-आदमी की
-                        चेतना को पाखंड ने घेरा है, तब-तब संतों ने अपने वचनों से
-                        हमारे मन को शीतलता प्रदान की है और सामाजिक चेतना को
-                        शुद्ध किया है।इस श्रृंखला में आचार्य जी ने संत कबीरदास,
-                        तुलसीदास, पलटूदास, दादू दयाल, सहजोबाई, मलूकदास,
-                        दरियादास, रविदास आदि संतों की वाणी पर चर्चा की है। जानिए
-                        उनके वचनों की जीवन में सार्थकता को आचार्य प्रशांत के साथ
-                        इस आसान वीडियो कोर्स में।
+                        {data?.details.description}
                       </span>
                     </div>{" "}
                     <div className="md:hidden  ">
@@ -361,569 +413,90 @@ const MainBody = () => {
               </div>
             </div>{" "}
             <div className="grid grid-cols-1 gap-x-4 md:grid-cols-2 md:gap-y-4 lg:grid-cols-3 lg:gap-x-8 lg:px-4 desk:grid-cols-4 ">
-              <a
-                href="/en/courses/course/swo1"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-col space-y-2 ">
-                  <div className="self-start pb-2 ">
-                    <div
-                      id="part-pointer"
-                      className="h-6 relative flex rounded-md bg-[rgb(148,163,184)] px-2 text-center text-xs text-white pt-1 "
-                    >
-                      <span className="font-hi courses_tag ">भाग 1</span>
-                      &nbsp;
-                    </div>
-                  </div>{" "}
-                  <div className="flex w-full flex-col text-left ">
-                    <div className="">
-                      <div className="text-lg font-medium leading-normal text-[rgb(30,41,59)]  ">
-                        <span className="font-hi   ">संत समागम परम सुख</span>
-                      </div>{" "}
-                      <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                        <span className="font-hi   ">
-                          संतों के मुख्य दोहे पर आधारित
-                        </span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">2 hours 30 minutes</span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">Contribution: ₹11</span>{" "}
-                        <del className=" ">
-                          <span className="pl-1  ">
-                            <span className="font-hi   ">₹800</span>
+              {data?.courses.map((course) => {
+                return (
+                  <a
+                    key={course.id}
+                    href="/en/courses/course/swo1"
+                    className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
+                  >
+                    <div className="flex flex-col space-y-2 ">
+                      <div className="self-start pb-2 ">
+                        <div
+                          id="part-pointer"
+                          className="h-6 relative flex rounded-md bg-[rgb(148,163,184)] px-2 text-center text-xs text-white pt-1 "
+                        >
+                          <span className="font-hi courses_tag ">
+                            {"भाग " + course.series.order.seq}
                           </span>
-                        </del>
-                      </div>
-                    </div>{" "}
-                    <div className="mt-2 flex flex-wrap text-xs ">
-                      <div className="mr-1 ">
-                        <div className="flex items-center rounded py-0.5 px-1.5 text-xs text-slate-700 bg-[rgb(199,230,248)]   ">
-                          <span className="font-en ">Hindi</span>
+                          &nbsp;
+                        </div>
+                      </div>{" "}
+                      <div className="flex w-full flex-col text-left ">
+                        <div className="">
+                          <div className="text-lg font-medium leading-normal text-[rgb(30,41,59)]  ">
+                            <span className="font-hi   ">{course.title}</span>
+                          </div>{" "}
+                          <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
+                            <span className="font-hi   ">
+                              {course.subtitle}
+                            </span>
+                          </div>{" "}
+                          <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
+                            <span className="font-en   ">
+                              {convertHoursAndMinutes(course.courseHours)}
+                            </span>
+                          </div>{" "}
+                          <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
+                            <span className="font-en   ">
+                              Contribution: ₹{course.amount}
+                            </span>{" "}
+                            <del className=" ">
+                              <span className="pl-1  ">
+                                <span className="font-hi   ">
+                                  ₹{course.originalAmount}
+                                </span>
+                              </span>
+                            </del>
+                          </div>
                         </div>{" "}
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="">
-                    <div className="inline-flex items-center space-x-3 text-xs font-medium ">
-                      <div
-                        id="main-website-add-to-cart-borderless-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9   "
-                      >
-                        <span className="font-en   ">ADD TO CART</span>
+                        <div className="mt-2 flex flex-wrap text-xs ">
+                          <div className="mr-1 ">
+                            <div className="flex items-center rounded py-0.5 px-1.5 text-xs text-slate-700 bg-[rgb(199,230,248)]   ">
+                              <span className="font-en ">
+                                {course.language.charAt(0).toUpperCase() +
+                                  course.language.slice(1).toLowerCase()}
+                              </span>
+                            </div>{" "}
+                          </div>
+                        </div>
                       </div>{" "}
-                      <div className="self-stretch py-2 ">
-                        <div className="h-full w-px  bg-[rgb(202,213,225)]   " />
+                      <div className="">
+                        <div className="inline-flex items-center space-x-3 text-xs font-medium ">
+                          <div
+                            id="main-website-add-to-cart-borderless-button"
+                            className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9   "
+                          >
+                            <span className="font-en   ">ADD TO CART</span>
+                          </div>{" "}
+                          <div className="self-stretch py-2 ">
+                            <div className="h-full w-px  bg-[rgb(202,213,225)]   " />
+                          </div>{" "}
+                          <div
+                            id="main-website-enroll-in-course-button"
+                            className="cursor-pointer rounded-md text-center  transition duration-150 text-[rgb(234,88,12)] leading-9 "
+                          >
+                            <span className="font-en   ">ENROL</span>
+                          </div>
+                        </div>
                       </div>{" "}
-                      <div
-                        id="main-website-enroll-in-course-button"
-                        className="cursor-pointer rounded-md text-center  transition duration-150 text-[rgb(234,88,12)] leading-9 "
-                      >
-                        <span className="font-en   ">ENROL</span>
-                      </div>
-                    </div>
-                  </div>{" "}
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/course/swo2"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-col space-y-2 ">
-                  <div className="self-start pb-2 ">
-                    <div
-                      id="part-pointer"
-                      className="h-6 relative flex rounded-md bg-[  "
-                    >
-                      <span className="font-hi courses_tag">भाग 2</span>
-                      &nbsp;
-                    </div>
-                  </div>{" "}
-                  <div className="flex w-full flex-col text-left ">
-                    <div className="">
-                      <div className="text-lg font-medium leading-normal text-[rgb(30,41,59)]  ">
-                        <span className="font-hi   ">
-                          गुरु न तजूं, हरि को तजि डारूँ
-                        </span>
-                      </div>{" "}
-                      <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                        <span className="font-hi   ">
-                          संतों के मुख्य दोहे पर आधारित
-                        </span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">1 hour 42 minutes</span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">Contribution: ₹11</span>{" "}
-                        <del className=" ">
-                          <span className="pl-1  ">
-                            <span className="font-hi   ">₹800</span>
-                          </span>
-                        </del>
-                      </div>
                     </div>{" "}
-                    <div className="mt-2 flex flex-wrap text-xs ">
-                      <div className="mr-1 ">
-                        <div className="flex items-center rounded py-0.5 px-1.5 text-xs text-slate-700 bg-[rgb(199,230,248)]   ">
-                          {" "}
-                          <span className="font-en   ">Hindi</span>
-                        </div>{" "}
-                      </div>
+                    <div className="pt-2 group-hover:invisible ">
+                      <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
                     </div>
-                  </div>{" "}
-                  <div className="">
-                    <div className="inline-flex items-center space-x-3 text-xs font-medium ">
-                      <div
-                        id="main-website-add-to-cart-borderless-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9  "
-                      >
-                        <span className="font-en   ">ADD TO CART</span>
-                      </div>{" "}
-                      <div className="self-stretch py-2 ">
-                        <div className="h-full w-px  bg-[rgb(202,213,225)]   " />
-                      </div>{" "}
-                      <div
-                        id="main-website-enroll-in-course-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ENROL</span>
-                      </div>
-                    </div>
-                  </div>{" "}
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/course/swo3"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-col space-y-2 ">
-                  <div className="self-start pb-2 ">
-                    <div
-                      id="part-pointer"
-                      className="h-6 relative flex rounded-md bg-[  "
-                    >
-                      <span className="font-hi  courses_tag  ">भाग 3</span>
-                      &nbsp;
-                    </div>
-                  </div>{" "}
-                  <div className="flex w-full flex-col text-left ">
-                    <div className="">
-                      <div className="text-lg font-medium leading-normal text-[rgb(30,41,59)]  ">
-                        <span className="font-hi   ">
-                          माया महा ठगनी हम जानी
-                        </span>
-                      </div>{" "}
-                      <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                        <span className="font-hi   ">
-                          संतों के मुख्य दोहे पर आधारित
-                        </span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">2 hours 23 minutes</span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">Contribution: ₹11</span>{" "}
-                        <del className=" ">
-                          <span className="pl-1  ">
-                            <span className="font-hi   ">₹800</span>
-                          </span>
-                        </del>
-                      </div>
-                    </div>{" "}
-                    <div className="mt-2 flex flex-wrap text-xs ">
-                      <div className="mr-1 ">
-                        <div className="flex items-center rounded py-0.5 px-1.5 text-xs text-slate-700 bg-[rgb(199,230,248)]   ">
-                          {" "}
-                          <span className="font-en   ">Hindi</span>
-                        </div>{" "}
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="">
-                    <div className="inline-flex items-center space-x-3 text-xs font-medium ">
-                      <div
-                        id="main-website-add-to-cart-borderless-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ADD TO CART</span>
-                      </div>{" "}
-                      <div className="self-stretch py-2 ">
-                        <div className="h-full w-px  bg-[rgb(202,213,225)]   " />
-                      </div>{" "}
-                      <div
-                        id="main-website-enroll-in-course-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ENROL</span>
-                      </div>
-                    </div>
-                  </div>{" "}
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/course/swo4"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-col space-y-2 ">
-                  <div className="self-start pb-2 ">
-                    <div
-                      id="part-pointer"
-                      className="h-6 relative flex rounded-md bg-[  "
-                    >
-                      <span className="font-hi  courses_tag ">भाग 4</span>
-                      &nbsp;
-                    </div>
-                  </div>{" "}
-                  <div className="flex w-full flex-col text-left ">
-                    <div className="">
-                      <div className="text-lg font-medium leading-normal text-[rgb(30,41,59)]  ">
-                        <span className="font-hi   ">
-                          संतों के प्रकाश में दैनिक जीवन
-                        </span>
-                      </div>{" "}
-                      <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                        <span className="font-hi   ">
-                          संतों के मुख्य दोहे पर आधारित
-                        </span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">1 hour 54 minutes</span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">Contribution: ₹11</span>{" "}
-                        <del className=" ">
-                          <span className="pl-1  ">
-                            <span className="font-hi   ">₹800</span>
-                          </span>
-                        </del>
-                      </div>
-                    </div>{" "}
-                    <div className="mt-2 flex flex-wrap text-xs ">
-                      <div className="mr-1 ">
-                        <div className="flex items-center rounded py-0.5 px-1.5 text-xs text-slate-700 bg-[rgb(199,230,248)]   ">
-                          {" "}
-                          <span className="font-en   ">Hindi</span>
-                        </div>{" "}
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="">
-                    <div className="inline-flex items-center space-x-3 text-xs font-medium ">
-                      <div
-                        id="main-website-add-to-cart-borderless-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ADD TO CART</span>
-                      </div>{" "}
-                      <div className="self-stretch py-2 ">
-                        <div className="h-full w-px  bg-[rgb(202,213,225)]   " />
-                      </div>{" "}
-                      <div
-                        id="main-website-enroll-in-course-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ENROL</span>
-                      </div>
-                    </div>
-                  </div>{" "}
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/course/swo5"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-col space-y-2 ">
-                  <div className="self-start pb-2 ">
-                    <div
-                      id="part-pointer"
-                      className="h-6 relative flex rounded-md "
-                    >
-                      <span className="font-hi courses_tag ">भाग 5</span>
-                      &nbsp;
-                    </div>
-                  </div>{" "}
-                  <div className="flex w-full flex-col text-left ">
-                    <div className="">
-                      <div className="text-lg font-medium leading-normal text-[rgb(30,41,59)]  ">
-                        <span className="font-hi   ">साधो! सहज समाधि भली</span>
-                      </div>{" "}
-                      <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                        <span className="font-hi   ">
-                          संतों के मुख्य दोहे पर आधारित
-                        </span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">3 hours 7 minutes</span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">Contribution: ₹11</span>{" "}
-                        <del className=" ">
-                          <span className="pl-1  ">
-                            <span className="font-hi   ">₹800</span>
-                          </span>
-                        </del>
-                      </div>
-                    </div>{" "}
-                    <div className="mt-2 flex flex-wrap text-xs ">
-                      <div className="mr-1 ">
-                        <div className="flex items-center rounded py-0.5 px-1.5 text-xs text-slate-700 bg-[rgb(199,230,248)]   ">
-                          {" "}
-                          <span className="font-en   ">Hindi</span>
-                        </div>{" "}
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="">
-                    <div className="inline-flex items-center space-x-3 text-xs font-medium ">
-                      <div
-                        id="main-website-add-to-cart-borderless-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ADD TO CART</span>
-                      </div>{" "}
-                      <div className="self-stretch py-2 ">
-                        <div className="h-full w-px  bg-[rgb(202,213,225)]   " />
-                      </div>{" "}
-                      <div
-                        id="main-website-enroll-in-course-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ENROL</span>
-                      </div>
-                    </div>
-                  </div>{" "}
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/course/swt1"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-col space-y-2 ">
-                  <div className="self-start pb-2 ">
-                    <div
-                      id="part-pointer"
-                      className="h-6 relative flex rounded-md bg-[  "
-                    >
-                      <span className="font-hi courses_tag  ">भाग 6</span>
-                      &nbsp;
-                    </div>
-                  </div>{" "}
-                  <div className="flex w-full flex-col text-left ">
-                    <div className="">
-                      <div className="text-lg font-medium leading-normal text-[rgb(30,41,59)]  ">
-                        <span className="font-hi   ">
-                          संत लल्लेश्वरी की ज़रूरी सीख
-                        </span>
-                      </div>{" "}
-                      <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                        <span className="font-hi   ">
-                          संतों के मुख्य दोहे पर आधारित
-                        </span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">1 hour 56 minutes</span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">Contribution: ₹11</span>{" "}
-                        <del className=" ">
-                          <span className="pl-1  ">
-                            <span className="font-hi   ">₹800</span>
-                          </span>
-                        </del>
-                      </div>
-                    </div>{" "}
-                    <div className="mt-2 flex flex-wrap text-xs ">
-                      <div className="mr-1 ">
-                        <div className="flex items-center rounded py-0.5 px-1.5 text-xs text-slate-700 bg-[rgb(199,230,248)]   ">
-                          {" "}
-                          <span className="font-en   ">Hindi</span>
-                        </div>{" "}
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="">
-                    <div className="inline-flex items-center space-x-3 text-xs font-medium ">
-                      <div
-                        id="main-website-add-to-cart-borderless-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ADD TO CART</span>
-                      </div>{" "}
-                      <div className="self-stretch py-2 ">
-                        <div className="h-full w-px  bg-[rgb(202,213,225)]   " />
-                      </div>{" "}
-                      <div
-                        id="main-website-enroll-in-course-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ENROL</span>
-                      </div>
-                    </div>
-                  </div>{" "}
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/course/swt2"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-col space-y-2 ">
-                  <div className="self-start pb-2 ">
-                    <div
-                      id="part-pointer"
-                      className="h-6 relative flex rounded-md bg-[  "
-                    >
-                      <span className="font-hi  courses_tag ">भाग 7</span>
-                      &nbsp;
-                    </div>
-                  </div>{" "}
-                  <div className="flex w-full flex-col text-left ">
-                    <div className="">
-                      <div className="text-lg font-medium leading-normal text-[rgb(30,41,59)]  ">
-                        <span className="font-hi   ">
-                          सोना, सज्जन, साधूजन, टूट जुड़े सौ बार
-                        </span>
-                      </div>{" "}
-                      <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                        <span className="font-hi   ">
-                          संतों के मुख्य दोहे पर आधारित
-                        </span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">2 hours 54 minutes</span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">Contribution: ₹11</span>{" "}
-                        <del className=" ">
-                          <span className="pl-1  ">
-                            <span className="font-hi   ">₹800</span>
-                          </span>
-                        </del>
-                      </div>
-                    </div>{" "}
-                    <div className="mt-2 flex flex-wrap text-xs ">
-                      <div className="mr-1 ">
-                        <div className="flex items-center rounded py-0.5 px-1.5 text-xs text-slate-700 bg-[rgb(199,230,248)]   ">
-                          {" "}
-                          <span className="font-en   ">Hindi</span>
-                        </div>{" "}
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="">
-                    <div className="inline-flex items-center space-x-3 text-xs font-medium ">
-                      <div
-                        id="main-website-add-to-cart-borderless-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ADD TO CART</span>
-                      </div>{" "}
-                      <div className="self-stretch py-2 ">
-                        <div className="h-full w-px  bg-[rgb(202,213,225)]   " />
-                      </div>{" "}
-                      <div
-                        id="main-website-enroll-in-course-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ENROL</span>
-                      </div>
-                    </div>
-                  </div>{" "}
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/course/swt3"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-col space-y-2 ">
-                  <div className="self-start pb-2 ">
-                    <div
-                      id="part-pointer"
-                      className="h-6 relative flex rounded-md bg-[  "
-                    >
-                      <span className="font-hi  courses_tag ">भाग 8</span>
-                      &nbsp;
-                    </div>
-                  </div>{" "}
-                  <div className="flex w-full flex-col text-left ">
-                    <div className="">
-                      <div className="text-lg font-medium leading-normal text-[rgb(30,41,59)]  ">
-                        <span className="font-hi   ">
-                          संतवाणी: आंतरिक दर्द की दवा
-                        </span>
-                      </div>{" "}
-                      <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                        <span className="font-hi   ">
-                          संतों के मुख्य दोहे पर आधारित
-                        </span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">1 hour 55 minutes</span>
-                      </div>{" "}
-                      <div className="pt-1 text-xs text-[rgb(71,85,105)] lg:text-sm  ">
-                        <span className="font-en   ">Contribution: ₹11</span>{" "}
-                        <del className=" ">
-                          <span className="pl-1  ">
-                            <span className="font-hi   ">₹800</span>
-                          </span>
-                        </del>
-                      </div>
-                    </div>{" "}
-                    <div className="mt-2 flex flex-wrap text-xs ">
-                      <div className="mr-1 ">
-                        <div className="flex items-center rounded py-0.5 px-1.5 text-xs text-slate-700 bg-[rgb(199,230,248)]   ">
-                          {" "}
-                          <span className="font-en   ">Hindi</span>
-                        </div>{" "}
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="">
-                    <div className="inline-flex items-center space-x-3 text-xs font-medium ">
-                      <div
-                        id="main-website-add-to-cart-borderless-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ADD TO CART</span>
-                      </div>{" "}
-                      <div className="self-stretch py-2 ">
-                        <div className="h-full w-px  bg-[rgb(202,213,225)]   " />
-                      </div>{" "}
-                      <div
-                        id="main-website-enroll-in-course-button"
-                        className="cursor-pointer rounded-md text-center transition duration-150 text-[rgb(234,88,12)] leading-9    "
-                      >
-                        <span className="font-en   ">ENROL</span>
-                      </div>
-                    </div>
-                  </div>{" "}
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
+                  </a>
+                );
+              })}
             </div>{" "}
             <div className="px-4 lg:px-8 ">
               <div className="">
@@ -934,1170 +507,119 @@ const MainBody = () => {
               </div>
             </div>{" "}
             <div className="grid grid-cols-1 md:grid-cols-2 md:gap-y-4 lg:gap-x-8 lg:px-4 desk:grid-cols-3 ">
-              <a
-                href="/en/courses/series/cs-9a687f"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-3c2f4551-5465-43be-a34e-7d598beab8c3/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
+              {data?.relatedContent.slice(0, -1).map((content) => {
+                return (
+                  <a
+                    key={content.id}
+                    href="/en/courses/series/cs-9a687f"
+                    className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
+                  >
+                    <div className="flex flex-row items-start ">
+                      <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
+                        <div className="w-full ">
+                          <div
+                            id="stacked-images-wrapper"
+                            className="relative aspect-[16/9] w-full overflow-hidden  "
+                          >
+                            <div className="absolute inset-0 mx-2 border border-t border-white  ">
+                              <div className="relative h-full w-full overflow-hidden rounded ">
+                                <img
+                                  className="h-full w-full object-cover "
+                                  src={
+                                    content.thumbnail.domain +
+                                    "/" +
+                                    content.thumbnail.basePath +
+                                    "/" +
+                                    content.thumbnail.qualities[0] +
+                                    "/" +
+                                    content.thumbnail.key
+                                  }
+                                  alt="Thumbnail"
+                                />{" "}
+                                <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
+                                  {" "}
+                                </div>{" "}
+                                <img
+                                  className="absolute object-contain logo-height-base right-1 bottom-1 "
+                                  src="/images/ic_apsignature_english.png"
+                                  alt="AP Name Logo"
+                                />
+                              </div>
                             </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_english.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-3c2f4551-5465-43be-a34e-7d598beab8c3/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
+                            <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
+                              <div className="relative h-full w-full overflow-hidden rounded ">
+                                <img
+                                  className="h-full w-full object-cover "
+                                  src={
+                                    content.thumbnail.domain +
+                                    "/" +
+                                    content.thumbnail.basePath +
+                                    "/" +
+                                    content.thumbnail.qualities[0] +
+                                    "/" +
+                                    content.thumbnail.key
+                                  }
+                                  alt="Thumbnail"
+                                />{" "}
+                                <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
+                                  {" "}
+                                </div>{" "}
+                                <img
+                                  className="absolute object-contain logo-height-base right-1 bottom-1 "
+                                  src="/images/ic_apsignature_english.png"
+                                  alt="AP Name Logo"
+                                />
+                              </div>
                             </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_english.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-3c2f4551-5465-43be-a34e-7d598beab8c3/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_english.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-en   ">Kabir Saheb</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-en   ">
-                        Based on Selected Verses of Kabir Saheb
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">4 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/cs-578f43"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-e8b1ac33-5cc8-40fd-b873-e89e8ec2a712/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_english.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-e8b1ac33-5cc8-40fd-b873-e89e8ec2a712/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_english.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-e8b1ac33-5cc8-40fd-b873-e89e8ec2a712/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_english.png"
-                              alt="AP Name Logo"
-                            />
+                            <div className="absolute inset-0 top-2 border border-t border-white  ">
+                              <div className="relative h-full w-full overflow-hidden rounded ">
+                                <img
+                                  className="h-full w-full object-cover "
+                                  src={
+                                    content.thumbnail.domain +
+                                    "/" +
+                                    content.thumbnail.basePath +
+                                    "/" +
+                                    content.thumbnail.qualities[0] +
+                                    "/" +
+                                    content.thumbnail.key
+                                  }
+                                  alt="Thumbnail"
+                                />{" "}
+                                <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
+                                  {" "}
+                                </div>{" "}
+                                <img
+                                  className="absolute object-contain logo-height-base right-1 bottom-1 "
+                                  src="/images/ic_apsignature_english.png"
+                                  alt="AP Name Logo"
+                                />
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-en   ">Nitnem Sahib</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-en   ">
-                        Based on Verses of Nitnem Sahib
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">6 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/cs-c70476"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-ee768c0f-9284-4557-bcb8-bc91ca94c394/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
+                      </div>{" "}
+                      <div className="ml-4 flex flex-shrink flex-col ">
+                        <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
+                          <span className="font-en   ">{content.title}</span>
                         </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-ee768c0f-9284-4557-bcb8-bc91ca94c394/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
+                        <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
+                          <span className="font-en   ">{content.subtitle}</span>
                         </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-ee768c0f-9284-4557-bcb8-bc91ca94c394/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
+                        <div className="text-sm text-[rgb(71,85,105)]  ">
+                          <span className="font-en   ">
+                            {content.coursesCount} Video Series
+                          </span>
                         </div>
                       </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-hi   ">नितनेम साहिब</span>
                     </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-hi   ">
-                        नितनेम साहिब की मुख्य वाणी पर आधारित
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">4 Video Series</span>
+                    <div className="pt-2 group-hover:invisible md:pr-4 ">
+                      <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
                     </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/cs-999400"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-bab376ea-0e21-4cc6-9362-e28bb9ecd3a5/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-bab376ea-0e21-4cc6-9362-e28bb9ecd3a5/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-bab376ea-0e21-4cc6-9362-e28bb9ecd3a5/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-hi   ">बाबा बुल्लेशाह</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-hi   ">
-                        बुल्लेशाह की मुख्य काफी पर आधारित
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">3 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/course-series-ad3c19"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-5b55a674-0ba0-40e9-9640-8423cffd03d8/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-5b55a674-0ba0-40e9-9640-8423cffd03d8/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-5b55a674-0ba0-40e9-9640-8423cffd03d8/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-hi   ">कबीर साहब</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-hi   ">
-                        कबीर साहब की सीख पर आधारित
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">5 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/course-series-d27351"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-2b4b3079-af40-49ae-b34c-0796fcd5c7d0/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-2b4b3079-af40-49ae-b34c-0796fcd5c7d0/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-2b4b3079-af40-49ae-b34c-0796fcd5c7d0/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-hi   ">श्रीरामचरितमानस</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-hi   ">
-                        रामचरितमानस श्रृंखला | जानें श्रीराम के मर्म को
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">5 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/cs-58e4a4"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-7c69638b-24d7-4b4a-a353-e6847791be53/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-7c69638b-24d7-4b4a-a353-e6847791be53/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-7c69638b-24d7-4b4a-a353-e6847791be53/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-hi   ">काम से राम तक</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-hi   ">
-                        मुनि भर्तृहरि कृत श्रृंगार शतकम् और वैराग्य शतकम् के
-                        मुख्य श्लोकों पर आधारित
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">6 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/course-series-54e291"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-f2139089-a281-4d57-8615-dcf521e2f7f6/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-f2139089-a281-4d57-8615-dcf521e2f7f6/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-f2139089-a281-4d57-8615-dcf521e2f7f6/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-hi   ">निर्गुण, निरंजन राम</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-hi   ">
-                        श्री राम पर कबीर साहब के मुख्य दोहे पर आधारित
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">3 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/course-series-839114"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-05b1c2ea-a5bf-4b15-b8bf-00b838505ce0/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_english.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-05b1c2ea-a5bf-4b15-b8bf-00b838505ce0/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_english.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-05b1c2ea-a5bf-4b15-b8bf-00b838505ce0/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_english.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-en   ">Vivekachudamani</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-en   ">
-                        Crest Jewel of Discretion
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">3 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/course-series-f0d0af"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-d1f4c119-4774-4c8a-bb98-998c2ad7a13d/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-d1f4c119-4774-4c8a-bb98-998c2ad7a13d/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-d1f4c119-4774-4c8a-bb98-998c2ad7a13d/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-hi   ">आत्मबोध</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-hi   ">
-                        आदि शंकराचार्य कृत आत्मबोध के श्लोकों पर आधारित
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">3 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/course-series-3b7d8c"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-8fcda564-b3f2-4e59-bd23-823e9610467c/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-8fcda564-b3f2-4e59-bd23-823e9610467c/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-8fcda564-b3f2-4e59-bd23-823e9610467c/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-hi   ">पतंजलि योगसूत्र</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-hi   ">
-                        पतंजलि योगसूत्र पर आधारित योग श्रृंखला
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">3 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/course-series-3d0a7d"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-28d5facd-82bc-43cd-a9b5-09d02425af8f/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1  "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-28d5facd-82bc-43cd-a9b5-09d02425af8f/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-28d5facd-82bc-43cd-a9b5-09d02425af8f/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-hi   ">अपरोक्षानुभूति</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-hi   ">
-                        अपरोक्षानुभूति के श्लोकों पर आधारित श्रृंखला
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">6 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/course-series-b39a53"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-a3e7c596-fe2b-46c1-96cc-0d7dc0f57def/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-a3e7c596-fe2b-46c1-96cc-0d7dc0f57def/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-a3e7c596-fe2b-46c1-96cc-0d7dc0f57def/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-hi   ">योगवासिष्ठ सार</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-hi   ">
-                        राम और उनके गुरु महर्षि वसिष्ठ के संवाद पर आधारित
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">6 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
-              <a
-                href="/en/courses/series/course-series-a64d85"
-                className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow "
-              >
-                <div className="flex flex-row items-start ">
-                  <div className="flex w-1/3 flex-shrink-0 flex-col items-start space-y-1 ">
-                    <div className="w-full ">
-                      <div
-                        id="stacked-images-wrapper"
-                        className="relative aspect-[16/9] w-full overflow-hidden  "
-                      >
-                        <div className="absolute inset-0 mx-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-5a2e0fda-9558-45e8-8caf-7025f3db2a74/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-1 mx-1 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-5a2e0fda-9558-45e8-8caf-7025f3db2a74/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>{" "}
-                        <div className="absolute inset-0 top-2 border border-t border-white  ">
-                          <div className="relative h-full w-full overflow-hidden rounded ">
-                            <img
-                              className="h-full w-full object-cover "
-                              src="https://cimg.acharyaprashant.org/images/img-5a2e0fda-9558-45e8-8caf-7025f3db2a74/10/image.jpg"
-                              alt="Thumbnail"
-                            />{" "}
-                            <div className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-black align-bottom text-base font-semibold text-white  ">
-                              {" "}
-                            </div>{" "}
-                            <img
-                              className="absolute object-contain logo-height-base right-1 bottom-1 "
-                              src="/images/ic_apsignature_hindi.png"
-                              alt="AP Name Logo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="ml-4 flex flex-shrink flex-col ">
-                    <div className="text-lg font-medium text-[rgb(30,41,59)]  ">
-                      <span className="font-hi   ">व्यावहारिक वेदांत</span>
-                    </div>{" "}
-                    <div className="text-sm leading-normal text-[rgb(71,85,105)] lg:text-base  ">
-                      <span className="font-hi   ">
-                        श्री रामकृष्ण परमहंस, स्वामी विवेकानंद और व्यावहारिक
-                        वेदांत
-                      </span>
-                    </div>{" "}
-                    <div className="text-sm text-[rgb(71,85,105)]  ">
-                      <span className="font-en   ">4 Video Series</span>
-                    </div>
-                  </div>
-                </div>{" "}
-                <div className="pt-2 group-hover:invisible md:pr-4 ">
-                  <div className="h-[0.5px] w-full  bg-[rgb(202,213,225)]   " />
-                </div>
-              </a>
+                  </a>
+                );
+              })}
+
               <div className="group flex cursor-pointer flex-col justify-between space-y-2 overflow-hidden px-4 pt-4 hover:bg-slate-100 lg:rounded-lg lg:hover:shadow ">
                 <div className="flex flex-row items-start space-x-4 ">
                   <div className="w-1/3 flex-shrink-0 ">
@@ -2204,12 +726,14 @@ const MainBody = () => {
                 </div>{" "}
                 <div className="w-full md:pl-24 ">
                   <div className="">
-                    <div className="flex items-center justify-between md:cursor-pointer ">
+                    <div
+                      onClick={() => setdrop(!drop)}
+                      className="flex items-center justify-between md:cursor-pointer "
+                    >
                       <div className="pr-2 font-semibold text-[rgb(71,85,105)]  ">
                         <span className="font-hi   ">
                           {" "}
-                          कोई भी वीडियो श्रृंखला आचार्य प्रशांत के यूट्यूब
-                          वीडियो से कैसे अलग है?
+                          {data.faqs[0].question}
                         </span>
                       </div>{" "}
                       <div className="h-3 w-3 text-slate-400 hover:text-slate-800  ">
@@ -2228,162 +752,22 @@ const MainBody = () => {
                         </svg>
                       </div>
                     </div>{" "}
-                  </div>{" "}
-                  <div className="my-4 h-[0.5px] justify-start  bg-[rgb(202,213,225)]   " />
-                  <div className="">
-                    <div className="flex items-center justify-between md:cursor-pointer ">
-                      <div className="pr-2 font-semibold text-[rgb(71,85,105)]  ">
-                        <span className="font-hi   ">
-                          क्या ये लाइव वीडियो हैं या इसमें पहले से रिकॉर्डेड
-                          वीडियो हैं?
-                        </span>
-                      </div>{" "}
-                      <div className="h-3 w-3 text-slate-400 hover:text-slate-800  ">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={11}
-                          height={7}
-                          viewBox="0 0 11 7"
-                          className="fill-current  "
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M.793.793a1 1 0 0 1 1.414 0L5.5 4.086 8.793.793a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z"
-                            className=" "
-                          />
-                        </svg>
+                    {drop && (
+                      <div id="markdown" class="w-full">
+                        <div class="tab:text-md py-2 pr-4 leading-normal text-[rgb(71,85,105)] tab:pr-8">
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: data.faqs[0].answer,
+                            }}
+                            class="font-hi dynamicHTMLContainer "
+                          ></span>
+                        </div>
                       </div>
-                    </div>{" "}
+                    )}
                   </div>{" "}
-                  <div className="my-4 h-[0.5px] justify-start  bg-[rgb(202,213,225)]   " />
-                  <div className="">
-                    <div className="flex items-center justify-between md:cursor-pointer ">
-                      <div className="pr-2 font-semibold text-[rgb(71,85,105)]  ">
-                        <span className="font-hi   ">
-                          वीडियो श्रृंखला के लिए सहयोग राशि क्यों रखी गयी है? यह
-                          निःशुल्क क्यों नहीं है?
-                        </span>
-                      </div>{" "}
-                      <div className="h-3 w-3 text-slate-400 hover:text-slate-800  ">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={11}
-                          height={7}
-                          viewBox="0 0 11 7"
-                          className="fill-current  "
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M.793.793a1 1 0 0 1 1.414 0L5.5 4.086 8.793.793a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z"
-                            className=" "
-                          />
-                        </svg>
-                      </div>
-                    </div>{" "}
-                  </div>{" "}
-                  <div className="my-4 h-[0.5px] justify-start  bg-[rgb(202,213,225)]   " />
-                  <div className="">
-                    <div className="flex items-center justify-between md:cursor-pointer ">
-                      <div className="pr-2 font-semibold text-[rgb(71,85,105)]  ">
-                        <span className="font-hi   ">
-                          सहयोग राशि से अधिक दान देने से मुझे क्या लाभ होगा?
-                        </span>
-                      </div>{" "}
-                      <div className="h-3 w-3 text-slate-400 hover:text-slate-800  ">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={11}
-                          height={7}
-                          viewBox="0 0 11 7"
-                          className="fill-current  "
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M.793.793a1 1 0 0 1 1.414 0L5.5 4.086 8.793.793a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z"
-                            className=" "
-                          />
-                        </svg>
-                      </div>
-                    </div>{" "}
-                  </div>{" "}
-                  <div className="my-4 h-[0.5px] justify-start  bg-[rgb(202,213,225)]   " />
-                  <div className="">
-                    <div className="flex items-center justify-between md:cursor-pointer ">
-                      <div className="pr-2 font-semibold text-[rgb(71,85,105)]  ">
-                        <span className="font-hi   ">
-                          वीडियो श्रृंखला की रजिस्ट्रेशन की प्रकिया के बाद मैं
-                          उसे कब तक देख सकता हूँ?
-                        </span>
-                      </div>{" "}
-                      <div className="h-3 w-3 text-slate-400 hover:text-slate-800  ">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={11}
-                          height={7}
-                          viewBox="0 0 11 7"
-                          className="fill-current  "
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M.793.793a1 1 0 0 1 1.414 0L5.5 4.086 8.793.793a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z"
-                            className=" "
-                          />
-                        </svg>
-                      </div>
-                    </div>{" "}
-                  </div>{" "}
-                  <div className="my-4 h-[0.5px] justify-start  bg-[rgb(202,213,225)]   " />
-                  <div className="">
-                    <div className="flex items-center justify-between md:cursor-pointer ">
-                      <div className="pr-2 font-semibold text-[rgb(71,85,105)]  ">
-                        <span className="font-hi   ">
-                          क्या वीडियो श्रृंखला के वीडियो को बार-बार देखने की
-                          सुविधा उपलब्ध है?
-                        </span>
-                      </div>{" "}
-                      <div className="h-3 w-3 text-slate-400 hover:text-slate-800  ">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={11}
-                          height={7}
-                          viewBox="0 0 11 7"
-                          className="fill-current  "
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M.793.793a1 1 0 0 1 1.414 0L5.5 4.086 8.793.793a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z"
-                            className=" "
-                          />
-                        </svg>
-                      </div>
-                    </div>{" "}
-                  </div>{" "}
-                  <div className="my-4 h-[0.5px] justify-start  bg-[rgb(202,213,225)]   " />
-                  <div className="">
-                    <div className="flex items-center justify-between md:cursor-pointer ">
-                      <div className="pr-2 font-semibold text-[rgb(71,85,105)]  ">
-                        <span className="font-hi   ">
-                          मुझे वीडियो श्रृंखला से बहुत लाभ हुआ, अब मैं संस्था की
-                          कैसे सहायता कर सकता हूँ?
-                        </span>
-                      </div>{" "}
-                      <div className="h-3 w-3 text-slate-400 hover:text-slate-800  ">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={11}
-                          height={7}
-                          viewBox="0 0 11 7"
-                          className="fill-current  "
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M.793.793a1 1 0 0 1 1.414 0L5.5 4.086 8.793.793a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z"
-                            className=" "
-                          />
-                        </svg>
-                      </div>
-                    </div>{" "}
-                  </div>{" "}
+                  {data.faqs.slice(1)?.map((faq, index) => {
+                    return <FaqComponent key={index} faq={faq} />;
+                  })}
                 </div>
               </div>
             </div>
